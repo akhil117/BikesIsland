@@ -40,7 +40,7 @@ namespace BikesIsland.API.Controllers
             {
                 string attachmentUrl = string.Empty;
                 Bike bike = null;
-                if (string.IsNullOrEmpty(bikeDetails.image.FileName))
+                if (!string.IsNullOrEmpty(bikeDetails.image.FileName))
                 {
                     string fileName = $"{Guid.NewGuid()}-{bikeDetails.image.FileName}";
                     string fileTempPath = @$"{Path.GetTempPath()}{fileName}";
@@ -50,7 +50,7 @@ namespace BikesIsland.API.Controllers
                     await bikeDetails.image.CopyToAsync(stream);
                     attachmentUrl = await _blobStorageService.UploadBlobAsync(stream, fileName);
                 }
-                if (string.IsNullOrEmpty(attachmentUrl))
+                if (!string.IsNullOrEmpty(attachmentUrl))
                 {
                     bike = new Bike()
                     {
